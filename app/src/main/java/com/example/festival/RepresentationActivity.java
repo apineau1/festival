@@ -25,7 +25,17 @@ public class RepresentationActivity extends AppCompatActivity {
         String [] lieu = getIntent().getStringArrayExtra("lieu");
         String [] groupe = getIntent().getStringArrayExtra("groupe");
 
-        TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(lieu[1]+" "+groupe[1]);
+
+        TextView textView = (TextView) findViewById(R.id.textViewAfficheGroupe);
+        textView.setText(groupe[1]);
+        TextView textViewLieu = (TextView) findViewById(R.id.textViewAfficheLieu);
+        textViewLieu.setText(lieu[1]);
+        TextView textViewDate = (TextView)findViewById(R.id.textViewAfficheDate);
+        textViewDate.setText(representation[1]);
+        TextView textViewHeureDeb = (TextView)findViewById(R.id.textViewAfficheHeureDeb);
+        textViewHeureDeb.setText(representation[2]);
+        TextView textViewHeureFin = (TextView)findViewById(R.id.textViewAfficheHeureFin);
+        textViewHeureFin.setText(representation[3]);
+
     }
 }
