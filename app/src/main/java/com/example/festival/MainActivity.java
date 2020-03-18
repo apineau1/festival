@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TableLayout;
@@ -12,6 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         int longueur=0;
 
         InputStream inputStream2 = getResources().openRawResource(R.raw.api);
@@ -275,11 +277,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    */
 
-        /*
+
         OkHttpClient okHttpClient = new OkHttpClient();
         Request myGetRequest = new Request.Builder()
-                .url("http://localhost/api-rest-master/produits/lire.php")
+                .url("http://localhost/api/api.php")
                 .build();//https://api.github.com/users/florent37 https://91.160.18.96:8443/apineau1/api/api.php https://api.androidhive.info/contacts/ http://localhost/api/
 
         okHttpClient.newCall(myGetRequest).enqueue(new Callback() {
@@ -309,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                                 message += id+name+email+"\n";
                             }
                         } catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -324,6 +327,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        */
+
     }
 }
