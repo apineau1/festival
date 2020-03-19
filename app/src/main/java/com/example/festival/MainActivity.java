@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
+        /*
         int longueur=0;
 
         InputStream inputStream2 = getResources().openRawResource(R.raw.api);
@@ -277,13 +277,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    */
-
+        */
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request myGetRequest = new Request.Builder()
-                .url("http://localhost/api/api.php")
-                .build();//https://api.github.com/users/florent37 https://91.160.18.96:8443/apineau1/api/api.php https://api.androidhive.info/contacts/ http://localhost/api/
+                .url("https://api.github.com/users/florent37")
+                .build();//https://api.github.com/users/florent37 https://91.160.18.96:8443/apineau1/api/api.php https://api.androidhive.info/contacts/ http://localhost/api/api.php
 
         okHttpClient.newCall(myGetRequest).enqueue(new Callback() {
             @Override
@@ -300,28 +299,7 @@ public class MainActivity extends AppCompatActivity {
                         TextView textView5 = (TextView) findViewById(R.id.textView5);
                         String message = null;
 
-                        try {
-                            JSONObject jsonObj = new JSONObject(text);
-                            JSONArray contacts = jsonObj.getJSONArray("contacts");
-
-                            for (int i = 0; i < contacts.length(); i++) {
-                                JSONObject contact = contacts.getJSONObject(i);
-                                String id = contact.getString("id");
-                                String name = contact.getString("name");
-                                String email = contact.getString("email");
-                                message += id+name+email+"\n";
-                            }
-                        } catch (final JSONException e) {
-                            Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Json parsing error: " + e.getMessage(),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
+                        
                         textView5.setText(text); //message
                     }
                 });
