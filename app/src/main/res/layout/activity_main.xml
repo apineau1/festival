@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:stretchColumns="0"
+        <TextView
+            android:id="@+id/textViewTitre"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/idTable">
-        </TableLayout>
-    </ScrollView>
-    -->
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="51dp" />
+            android:text="@string/textViewTitre"
+            android:layout_marginBottom="15dp"/>
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:stretchColumns="0"
+                android:layout_height="wrap_content"
+                android:id="@+id/idTable">
+            </TableLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
