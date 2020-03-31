@@ -11,4 +11,13 @@
     <string name="textViewLieu">Lieu :</string>
     <string name="textViewAfficheLieu">lieu</string>
     <string name="textViewTitre">Affichage des représentations du festival</string>
+    <string name="textViewConnexion">Authentification</string>
+    <string name="textViewLogin">Identifiant</string>
+    <string name="editTextLogin" />
+    <string name="textViewMdp">Mot de passe</string>
+    <string name="ButtonValider">Connexion</string>
+    <string name="buttonAuthentification">Authentification</string>
+    <string name="ButtonRetour">Retour</string>
+    <string name="textViewPlaceDispo">Places disponibles :</string>
+    <string name="textViewAffichePlaceDispo" />
 </resources>

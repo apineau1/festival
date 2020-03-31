@@ -18,5 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RepresentationActivity"></activity>
+        <activity android:name=".ConnexionActivity"></activity>
     </application>
 </manifest>
