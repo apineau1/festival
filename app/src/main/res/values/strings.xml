@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">festival</string>
-    <string name="textViewAfficheGroupe">Groupe</string>
     <string name="textViewGroupe">Groupe :</string>
+    <string name="textViewAfficheGroupe">groupe</string>
     <string name="textViewDate">Date :</string>
-    <string name="textViewAfficheDate">Date</string>
+    <string name="textViewAfficheDate">date</string>
     <string name="textViewHeureDeb">Heure de Début :</string>
     <string name="textViewAfficheHeureDeb">heure de debut</string>
     <string name="textViewHeureFin">Heure de Fin :</string>

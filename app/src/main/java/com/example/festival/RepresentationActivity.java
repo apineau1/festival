@@ -25,7 +25,6 @@ public class RepresentationActivity extends AppCompatActivity {
         String [] lieu = getIntent().getStringArrayExtra("lieu");
         String [] groupe = getIntent().getStringArrayExtra("groupe");
 
-
         TextView textView = (TextView) findViewById(R.id.textViewAfficheGroupe);
         textView.setText(groupe[1]);
         TextView textViewLieu = (TextView) findViewById(R.id.textViewAfficheLieu);
@@ -36,6 +35,5 @@ public class RepresentationActivity extends AppCompatActivity {
         textViewHeureDeb.setText(representation[2]);
         TextView textViewHeureFin = (TextView)findViewById(R.id.textViewAfficheHeureFin);
         textViewHeureFin.setText(representation[3]);
-
     }
 }

@@ -18,21 +18,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<String> listeRepresentations = new ArrayList<String>();
     private int nbRepresentations;
 
     @Override
@@ -75,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Request myGetRequest = new Request.Builder()
-                .url("http://192.168.1.66/api/api.php")
-                .build();//https://api.github.com/users/florent37 https://91.160.18.96:8443/apineau1/api/api.php https://api.androidhive.info/contacts/ http://localhost/api/api.php
+        Request myGetRequest = new Request.Builder().url("http://192.168.1.66/api/api.php").build();
 
         okHttpClient.newCall(myGetRequest).enqueue(new Callback() {
             @Override
@@ -86,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 final String text = response.body().string();
-                final int statusCode = response.code();
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -94,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             final JSONObject jsonObj = new JSONObject(text);
-
-
 
                             final String [] col1 = new String[nbRepresentations+1];
                             col1[0]="Lieu";
