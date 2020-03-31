@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObjnbRepresentations = new JSONObject(textNbRepresentations);
                             nbRepresentations = jsonObjnbRepresentations.getInt("nbRepresentations");
-
-                            //Toast.makeText(getApplicationContext(),"nbRepresentations : "+nbRepresentations, Toast.LENGTH_LONG).show();
-
                         } catch (final JSONException e) {
                             Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
@@ -224,16 +221,14 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-
-                                        Intent intent = new Intent(MainActivity.this, RepresentationActivity.class);
-                                        intent.putExtra("representation", representation);
-                                        intent.putExtra("lieu", lieu);
-                                        intent.putExtra("groupe", groupe);
-                                        startActivity(intent);
+                                    Intent intent = new Intent(MainActivity.this, RepresentationActivity.class);
+                                    intent.putExtra("representation", representation);
+                                    intent.putExtra("lieu", lieu);
+                                    intent.putExtra("groupe", groupe);
+                                    startActivity(intent);
                                     }
                                 });
                             }
-
                         } catch (final JSONException e) {
                             Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
