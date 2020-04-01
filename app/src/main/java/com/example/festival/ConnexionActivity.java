@@ -2,10 +2,25 @@ package com.example.festival;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ConnexionActivity extends AppCompatActivity {
     @Override
@@ -13,13 +28,67 @@ public class ConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
-        Button btn = (Button)findViewById(R.id.buttonRetour);
-
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button buttonConnexion = (Button)findViewById(R.id.buttonConnexion);
+        buttonConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (ConnexionActivity.this, MainActivity.class);
-                startActivity(intent);
+                EditText editTextLogin = (EditText)findViewById(R.id.editTextLogin);
+                String login = editTextLogin.getText().toString();
+                EditText editTextMdp = (EditText)findViewById(R.id.editTextMdp);
+                String mdp = editTextMdp.getText().toString();
+                mdp = Functions.md5(mdp);
+                //editTextLogin.setText(mdp);
+                final OkHttpClient okHttpClient = new OkHttpClient();
+
+                Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/connexion.php?login="+login+"&mdp="+mdp).build();
+
+                okHttpClient.newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) { }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        final String textConnexion = response.body().string();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonObjnbRepresentations = new JSONObject(textConnexion);
+                                    String text = jsonObjnbRepresentations.getString("connexion");
+                                    //Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
+                                    if(text.equals("true")){
+                                        Toast.makeText(getApplicationContext(),"login correct", Toast.LENGTH_LONG).show();
+                                        int id = jsonObjnbRepresentations.getInt("id");
+                                        String nom = jsonObjnbRepresentations.getString("nom");
+                                        String prenom = jsonObjnbRepresentations.getString("prenom");
+                                        Manager.setInstance(id, nom, prenom);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"login incorrect", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (final JSONException e) {
+                                    Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        Button btnRetour = (Button)findViewById(R.id.buttonRetour);
+
+        btnRetour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

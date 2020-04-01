@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         int index = table.indexOfChild(tablerow)-1;
 
-                                        String[] representation= new String[4];
+                                        String[] representation= new String[5];
                                         String[] lieu= new String[4];
                                         String[] groupe= new String[6];
                                         try{
@@ -181,11 +181,13 @@ public class MainActivity extends AppCompatActivity {
                                             String date = r.getString("date");
                                             String heureDebut = r.getString("heureDebut");
                                             String heureFin = r.getString("heureFin");
+                                            String nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
 
                                             representation[0]=id;
                                             representation[1]=date;
                                             representation[2]=heureDebut;
                                             representation[3]=heureFin;
+                                            representation[4]=nbPlacesDisponibles;
 
                                             JSONObject lieuJson = r.getJSONObject("lieu");
                                             String idLieu = lieuJson.getString("id");

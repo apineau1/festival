@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textViewTitre"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Détails de la représentation" />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textViewTitre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Détails de la représentation" />
+
+        <TextView
+            android:id="@+id/textViewClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:visibility="invisible"
+            android:text="client" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,14 +31,12 @@
             android:id="@+id/textViewGroupe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewGroupe" />
 
         <TextView
             android:id="@+id/textViewAfficheGroupe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewAfficheGroupe" />
 
     </LinearLayout>
@@ -39,14 +50,12 @@
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewDate" />
 
         <TextView
             android:id="@+id/textViewAfficheDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewAfficheDate" />
 
     </LinearLayout>
@@ -60,14 +69,12 @@
             android:id="@+id/textViewHeureDeb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewHeureDeb" />
 
         <TextView
             android:id="@+id/textViewAfficheHeureDeb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewAfficheHeureDeb" />
     </LinearLayout>
 
@@ -80,14 +87,12 @@
             android:id="@+id/textViewHeureFin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewHeureFin" />
 
         <TextView
             android:id="@+id/textViewAfficheHeureFin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewAfficheHeureFin" />
     </LinearLayout>
 
@@ -100,41 +105,77 @@
             android:id="@+id/textViewLieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewLieu" />
 
         <TextView
             android:id="@+id/textViewAfficheLieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/textViewAfficheLieu" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewPlaceDispo"
+            android:id="@+id/textViewNbPlacesTotales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/textViewPlaceDispo" />
+            android:text="@string/textViewNbPlacesTotales" />
 
         <TextView
-            android:id="@+id/textViewAffichePlaceDispo"
+            android:id="@+id/textViewAffichageNbPlacesTotales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/textViewAffichePlaceDispo" />
+            android:text="@string/textViewAffichageNbPlacesTotales" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewNbPlacesDisponibles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewNbPlacesDisponibles" />
+
+        <TextView
+            android:id="@+id/textViewAffichageNbPlacesDisponibles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewAffichageNbPlacesDisponibles" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/placesVoulues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        tools:ignore="InvalidId">
+            <TextView
+                android:id="@+id/textViewNbPlacesVoulues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textViewNbPlacesVoulues" />
+
+            <EditText
+                android:id="@+id/editTextNbPlacesVoulues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="number"/>
+    </LinearLayout>
     <Button
         android:id="@+id/buttonAuthentification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/buttonAuthentification" />
 
     <Button
@@ -142,5 +183,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Revenir à la liste des représentations" />
-
 </LinearLayout>
