@@ -2,7 +2,6 @@ package com.example.festival;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +52,6 @@ public class RepresentationActivity extends AppCompatActivity {
         textViewNbPlacesDisponibles.setText(" "+representation[4]);
 
         Button buttonAuthentification = (Button) findViewById(R.id.buttonAuthentification);
-
         buttonAuthentification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +98,6 @@ public class RepresentationActivity extends AppCompatActivity {
                     EditText editTextNbPlacesVoulues = findViewById(R.id.editTextNbPlacesVoulues);
 
                     Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/insertReservation.php?idRepresentation="+idRepresentation+"&idClient="+m.getId()+"&nbPlaces="+editTextNbPlacesVoulues.getText()).build();
-
                     Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) { }
@@ -108,7 +105,6 @@ public class RepresentationActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             final String body = response.body().string();
-
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -121,7 +117,6 @@ public class RepresentationActivity extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "La réservation n'a pas pu être effectuée",Toast.LENGTH_LONG).show();
                                         }
                                     } catch (final JSONException e) {
-                                        Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {

@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -36,23 +35,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Request requestNbRepresentations = new Request.Builder().url("http://192.168.1.66/api/nbRepresentations.php").build();
-
         Http.getInstance().newCall(requestNbRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                final String textNbRepresentations = response.body().string();
-
+                final String body = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            JSONObject jsonObjnbRepresentations = new JSONObject(textNbRepresentations);
-                            nbRepresentations = jsonObjnbRepresentations.getInt("nbRepresentations");
+                            JSONObject jsonObj = new JSONObject(body);
+                            nbRepresentations = jsonObj.getInt("nbRepresentations");
                         } catch (final JSONException e) {
-                            Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -65,22 +61,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Request requestRepresentations = new Request.Builder().url("http://192.168.1.66/api/api.php").build();
-
+        Request requestRepresentations = new Request.Builder().url("http://192.168.1.66/api/representations.php").build();
         Http.getInstance().newCall(requestRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                final String text = response.body().string();
-
+                final String body = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
                         try {
-                            final JSONObject jsonObj = new JSONObject(text);
+                            final JSONObject jsonObj = new JSONObject(body);
 
                             final String [] col1 = new String[nbRepresentations+1];
                             col1[0]="Lieu";
@@ -157,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
                                 row.addView(tv4);
                                 row.addView(tv5);
 
-
                                 if(i==0){
                                     row.setClickable(false);
                                 }else{
@@ -172,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                                             String[] representation= new String[5];
                                             String[] lieu= new String[4];
-                                            String[] groupe= new String[6];
+                                            String[] groupe= new String[2];
                                             try{
                                                 JSONArray representations = jsonObj.getJSONArray("representations");
 
@@ -201,21 +194,13 @@ public class MainActivity extends AppCompatActivity {
                                                 lieu[3]=capAccueilLieu;
 
                                                 JSONObject groupeJson = r.getJSONObject("groupe");
-                                                String idGroupe = groupeJson.getString("nom");
+                                                String idGroupe = groupeJson.getString("id");
                                                 String nomGroupe = groupeJson.getString("nom");
-                                                String identiteResponsableGroupe = groupeJson.getString("nom");
-                                                String adresseGroupe = groupeJson.getString("nom");
-                                                String nombrePersonnesGroupe = groupeJson.getString("nom");
-                                                String nomPaysGroupe = groupeJson.getString("nom");
+
 
                                                 groupe[0]=idGroupe;
                                                 groupe[1]=nomGroupe;
-                                                groupe[2]=identiteResponsableGroupe;
-                                                groupe[3]=adresseGroupe;
-                                                groupe[4]=nombrePersonnesGroupe;
-                                                groupe[5]=nomPaysGroupe;
                                             } catch (final JSONException e) {
-                                                Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
@@ -231,13 +216,9 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
-
                                 table.addView(row);
-
-
                             }
                         } catch (final JSONException e) {
-                            Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -250,15 +231,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button buttonAuthentification = (Button) findViewById(R.id.buttonMainConnexion);
+        final Button buttonMainConnexion = (Button) findViewById(R.id.buttonMainConnexion);
 
-        buttonAuthentification.setOnClickListener(new View.OnClickListener() {
+        buttonMainConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new  Intent(MainActivity.this, ConnexionActivity.class);
                 startActivity(intent);
                 LinearLayout linearLayout = findViewById(R.id.layout_main);
-                linearLayout.removeView(buttonAuthentification);
+                linearLayout.removeView(buttonMainConnexion);
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.example.festival;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,7 +62,6 @@ public class ConnexionActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"login incorrect", Toast.LENGTH_LONG).show();
                                     }
                                 } catch (final JSONException e) {
-                                    Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
