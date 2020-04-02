@@ -1,6 +1,5 @@
 package com.example.festival;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -37,12 +35,10 @@ public class ConnexionActivity extends AppCompatActivity {
                 EditText editTextMdp = (EditText)findViewById(R.id.editTextMdp);
                 String mdp = editTextMdp.getText().toString();
                 mdp = Functions.md5(mdp);
-                //editTextLogin.setText(mdp);
-                final OkHttpClient okHttpClient = new OkHttpClient();
 
                 Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/connexion.php?login="+login+"&mdp="+mdp).build();
 
-                okHttpClient.newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
+                Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
@@ -56,7 +52,6 @@ public class ConnexionActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObjnbRepresentations = new JSONObject(textConnexion);
                                     String text = jsonObjnbRepresentations.getString("connexion");
-                                    //Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
                                     if(text.equals("true")){
                                         Toast.makeText(getApplicationContext(),"login correct", Toast.LENGTH_LONG).show();
                                         int id = jsonObjnbRepresentations.getInt("id");

@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/layout_main">
 
         <TextView
             android:id="@+id/textViewTitre"
@@ -18,6 +19,13 @@
             android:layout_height="wrap_content"
             android:text="@string/textViewTitre"
             android:layout_marginBottom="15dp"/>
+
+
+        <Button
+            android:id="@+id/buttonMainConnexion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonMainConnexion" />
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/scrollView1"

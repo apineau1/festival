@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,7 +24,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -34,11 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final OkHttpClient okHttpClient = new OkHttpClient();
+        Request requestNbRepresentations = new Request.Builder().url("http://192.168.1.66/api/nbRepresentations.php").build();
 
-        Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/nbRepresentations.php").build();
-
-        okHttpClient.newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
+        Http.getInstance().newCall(requestNbRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
@@ -66,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Request myGetRequest = new Request.Builder().url("http://192.168.1.66/api/api.php").build();
+        Request requestRepresentations = new Request.Builder().url("http://192.168.1.66/api/api.php").build();
 
-        okHttpClient.newCall(myGetRequest).enqueue(new Callback() {
+        Http.getInstance().newCall(requestRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
@@ -158,78 +157,84 @@ public class MainActivity extends AppCompatActivity {
                                 row.addView(tv4);
                                 row.addView(tv5);
 
-                                row.setClickable(true);
+
+                                if(i==0){
+                                    row.setClickable(false);
+                                }else{
+                                    row.setClickable(true);
+                                    row.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View view) {
+                                            TableRow tablerow = (TableRow) view;
+                                            TextView sample = (TextView) tablerow.getChildAt(1);
+                                            String result="";//=sample.getText().toString();
+
+                                            int index = table.indexOfChild(tablerow)-1;
+
+                                            String[] representation= new String[5];
+                                            String[] lieu= new String[4];
+                                            String[] groupe= new String[6];
+                                            try{
+                                                JSONArray representations = jsonObj.getJSONArray("representations");
+
+                                                JSONObject r = representations.getJSONObject(index);
+                                                String id = r.getString("id");
+                                                String date = r.getString("date");
+                                                String heureDebut = r.getString("heureDebut");
+                                                String heureFin = r.getString("heureFin");
+                                                String nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
+
+                                                representation[0]=id;
+                                                representation[1]=date;
+                                                representation[2]=heureDebut;
+                                                representation[3]=heureFin;
+                                                representation[4]=nbPlacesDisponibles;
+
+                                                JSONObject lieuJson = r.getJSONObject("lieu");
+                                                String idLieu = lieuJson.getString("id");
+                                                String nomLieu = lieuJson.getString("nom");
+                                                String adresseLieu = lieuJson.getString("adresseLieu");
+                                                String capAccueilLieu = lieuJson.getString("capAccueil");
+
+                                                lieu[0]=idLieu;
+                                                lieu[1]=nomLieu;
+                                                lieu[2]=adresseLieu;
+                                                lieu[3]=capAccueilLieu;
+
+                                                JSONObject groupeJson = r.getJSONObject("groupe");
+                                                String idGroupe = groupeJson.getString("nom");
+                                                String nomGroupe = groupeJson.getString("nom");
+                                                String identiteResponsableGroupe = groupeJson.getString("nom");
+                                                String adresseGroupe = groupeJson.getString("nom");
+                                                String nombrePersonnesGroupe = groupeJson.getString("nom");
+                                                String nomPaysGroupe = groupeJson.getString("nom");
+
+                                                groupe[0]=idGroupe;
+                                                groupe[1]=nomGroupe;
+                                                groupe[2]=identiteResponsableGroupe;
+                                                groupe[3]=adresseGroupe;
+                                                groupe[4]=nombrePersonnesGroupe;
+                                                groupe[5]=nomPaysGroupe;
+                                            } catch (final JSONException e) {
+                                                Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                            }
+                                            Intent intent = new Intent(MainActivity.this, RepresentationActivity.class);
+                                            intent.putExtra("representation", representation);
+                                            intent.putExtra("lieu", lieu);
+                                            intent.putExtra("groupe", groupe);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }
 
                                 table.addView(row);
 
-                                row.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View view) {
-                                        TableRow tablerow = (TableRow) view;
-                                        TextView sample = (TextView) tablerow.getChildAt(1);
-                                        String result="";//=sample.getText().toString();
 
-                                        int index = table.indexOfChild(tablerow)-1;
-
-                                        String[] representation= new String[5];
-                                        String[] lieu= new String[4];
-                                        String[] groupe= new String[6];
-                                        try{
-                                            JSONArray representations = jsonObj.getJSONArray("representations");
-
-                                            JSONObject r = representations.getJSONObject(index);
-                                            String id = r.getString("id");
-                                            String date = r.getString("date");
-                                            String heureDebut = r.getString("heureDebut");
-                                            String heureFin = r.getString("heureFin");
-                                            String nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
-
-                                            representation[0]=id;
-                                            representation[1]=date;
-                                            representation[2]=heureDebut;
-                                            representation[3]=heureFin;
-                                            representation[4]=nbPlacesDisponibles;
-
-                                            JSONObject lieuJson = r.getJSONObject("lieu");
-                                            String idLieu = lieuJson.getString("id");
-                                            String nomLieu = lieuJson.getString("nom");
-                                            String adresseLieu = lieuJson.getString("adresseLieu");
-                                            String capAccueilLieu = lieuJson.getString("capAccueil");
-
-                                            lieu[0]=idLieu;
-                                            lieu[1]=nomLieu;
-                                            lieu[2]=adresseLieu;
-                                            lieu[3]=capAccueilLieu;
-
-                                            JSONObject groupeJson = r.getJSONObject("groupe");
-                                            String idGroupe = groupeJson.getString("nom");
-                                            String nomGroupe = groupeJson.getString("nom");
-                                            String identiteResponsableGroupe = groupeJson.getString("nom");
-                                            String adresseGroupe = groupeJson.getString("nom");
-                                            String nombrePersonnesGroupe = groupeJson.getString("nom");
-                                            String nomPaysGroupe = groupeJson.getString("nom");
-
-                                            groupe[0]=idGroupe;
-                                            groupe[1]=nomGroupe;
-                                            groupe[2]=identiteResponsableGroupe;
-                                            groupe[3]=adresseGroupe;
-                                            groupe[4]=nombrePersonnesGroupe;
-                                            groupe[5]=nomPaysGroupe;
-                                    } catch (final JSONException e) {
-                                        Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                    }
-                                    Intent intent = new Intent(MainActivity.this, RepresentationActivity.class);
-                                    intent.putExtra("representation", representation);
-                                    intent.putExtra("lieu", lieu);
-                                    intent.putExtra("groupe", groupe);
-                                    startActivity(intent);
-                                    }
-                                });
                             }
                         } catch (final JSONException e) {
                             Log.e("message d'erreur", "Json parsing error: " + e.getMessage());
@@ -242,6 +247,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        final Button buttonAuthentification = (Button) findViewById(R.id.buttonMainConnexion);
+
+        buttonAuthentification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new  Intent(MainActivity.this, ConnexionActivity.class);
+                startActivity(intent);
+                LinearLayout linearLayout = findViewById(R.id.layout_main);
+                linearLayout.removeView(buttonAuthentification);
             }
         });
     }

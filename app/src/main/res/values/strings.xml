@@ -23,4 +23,6 @@
     <string name="buttonAuthentification">Authentification</string>
     <string name="buttonRetour">Retour</string>
     <string name="textViewNbPlacesVoulues">Places voulues</string>
+    <string name="buttonMainConnexion">Se connecter</string>
+    <string name="buttonBackHome">Revenir à la liste des représentations</string>
 </resources>

@@ -12,14 +12,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Détails de la représentation" />
-
-        <TextView
-            android:id="@+id/textViewClient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:visibility="invisible"
-            android:text="client" />
     </LinearLayout>
 
     <LinearLayout
@@ -158,18 +150,18 @@
         android:orientation="horizontal"
         android:visibility="invisible"
         tools:ignore="InvalidId">
-            <TextView
-                android:id="@+id/textViewNbPlacesVoulues"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textViewNbPlacesVoulues" />
+        <TextView
+            android:id="@+id/textViewNbPlacesVoulues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewNbPlacesVoulues" />
 
-            <EditText
-                android:id="@+id/editTextNbPlacesVoulues"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number"/>
+        <EditText
+            android:id="@+id/editTextNbPlacesVoulues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:inputType="number"/>
     </LinearLayout>
     <Button
         android:id="@+id/buttonAuthentification"
@@ -179,8 +171,16 @@
         android:text="@string/buttonAuthentification" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonBackHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Revenir à la liste des représentations" />
+        android:text="@string/buttonBackHome" />
+
+    <TextView
+        android:id="@+id/textViewClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"
+        android:text="client" />
 </LinearLayout>
