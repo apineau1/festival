@@ -95,23 +95,23 @@ public class MainActivity extends AppCompatActivity {
 
                             JSONArray representations = jsonObj.getJSONArray("representations");
 
-                            for (int i=1; i < representations.length(); i++) {
+                            for (int i=0; i < representations.length(); i++) {
                                 JSONObject r = representations.getJSONObject(i);
                                 String date = r.getString("date");
                                 String heureDebut = r.getString("heureDebut");
                                 String heureFin = r.getString("heureFin");
 
-                                col3[i] = date;
-                                col4[i] = heureDebut;
-                                col5[i] = heureFin;
+                                col3[i+1] = date;
+                                col4[i+1] = heureDebut;
+                                col5[i+1] = heureFin;
 
                                 JSONObject lieu = r.getJSONObject("lieu");
                                 String nomLieu = lieu.getString("nom");
-                                col1[i] = nomLieu;
+                                col1[i+1] = nomLieu;
 
                                 JSONObject groupe = r.getJSONObject("groupe");
                                 String nomGroupe = groupe.getString("nom");
-                                col2[i] = nomGroupe;
+                                col2[i+1] = nomGroupe;
                             }
 
                             final TableLayout table = findViewById(R.id.idTable);

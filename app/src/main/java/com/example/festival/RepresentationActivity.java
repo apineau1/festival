@@ -30,6 +30,7 @@ import okhttp3.Response;
 
 public class RepresentationActivity extends AppCompatActivity {
     String idRepresentation;
+    String nbPlacesDisponibles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class RepresentationActivity extends AppCompatActivity {
                             String date = r.getString("date");
                             String heureDebut = r.getString("heureDebut");
                             String heureFin = r.getString("heureFin");
-                            String nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
+                            nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
 
                             JSONObject lieuJson = r.getJSONObject("lieu");
                             String nomLieu = lieuJson.getString("nom");
@@ -129,46 +130,45 @@ public class RepresentationActivity extends AppCompatActivity {
             buttonReservation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), editTextPlacesVoulues.getText(), Toast.LENGTH_LONG).show();
+                    if(Integer.parseInt(editTextPlacesVoulues.getText().toString()) <= Integer.parseInt(nbPlacesDisponibles)) {
+                        Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/insertReservation.php?idRepresentation=" + idRepresentation + "&idClient=" + Manager.getId() + "&nbPlaces=" + editTextPlacesVoulues.getText()).build();
+                        Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                final String body = response.body().string();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(body);
+                                            String reserv = jsonObject.getString("return");
+                                            if (reserv.equals("true")) {
+                                                Toast.makeText(getApplicationContext(), "Réservation effectuée", Toast.LENGTH_LONG).show();
+                                                recreate();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "La réservation n'a pas pu être effectuée", Toast.LENGTH_LONG).show();
+                                            }
+                                        } catch (final JSONException e) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(getApplicationContext(), "Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        Toast.makeText(getApplicationContext(), "La réservation n'a pas pu être effectuée, le nombre de places demandées doit être inférieur au nombre de places disponibles", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
     }
-
-        /*
-
-        EditText editTextNbPlacesVoulues = findViewById(idEditTextNbPlacesVoulues);
-
-        Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/insertReservation.php?idRepresentation="+idRepresentation+"&idClient="+Manager.getId()+"&nbPlaces="+editTextNbPlacesVoulues.getText()).build();
-        Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) { }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                final String body = response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject = new JSONObject(body);
-                            String reserv = jsonObject.getString("return");
-                            if(reserv=="true"){
-                                Toast.makeText(getApplicationContext(), "Réservation effectuée",Toast.LENGTH_LONG).show();
-                            }else{
-                                Toast.makeText(getApplicationContext(), "La réservation n'a pas pu être effectuée",Toast.LENGTH_LONG).show();
-                            }
-                        } catch (final JSONException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-        */
 }
