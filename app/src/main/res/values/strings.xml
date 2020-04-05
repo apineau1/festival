@@ -25,4 +25,6 @@
     <string name="textViewNbPlacesVoulues">Places voulues</string>
     <string name="buttonMainConnexion">Se connecter</string>
     <string name="buttonBackHome">Revenir à la liste des représentations</string>
+    <string name="buttonReservation">Réserver</string>
+    <string name="buttonDeconnexion">Déconnexion</string>
 </resources>

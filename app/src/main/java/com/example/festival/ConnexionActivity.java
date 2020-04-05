@@ -8,6 +8,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.festival.utilitaires.Functions;
+import com.example.festival.utilitaires.Http;
+import com.example.festival.utilitaires.Manager;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,14 +56,14 @@ public class ConnexionActivity extends AppCompatActivity {
                                     JSONObject jsonObjnbRepresentations = new JSONObject(textConnexion);
                                     String text = jsonObjnbRepresentations.getString("connexion");
                                     if(text.equals("true")){
-                                        Toast.makeText(getApplicationContext(),"login correct", Toast.LENGTH_LONG).show();
                                         int id = jsonObjnbRepresentations.getInt("id");
                                         String nom = jsonObjnbRepresentations.getString("nom");
                                         String prenom = jsonObjnbRepresentations.getString("prenom");
-                                        Manager.setInstance(id, nom, prenom);
+                                        new Manager(id, nom, prenom);
+                                        Toast.makeText(getApplicationContext(),"Bienvenu "+prenom, Toast.LENGTH_LONG).show();
                                         finish();
                                     }else{
-                                        Toast.makeText(getApplicationContext(),"login incorrect", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(),"Login incorrect", Toast.LENGTH_LONG).show();
                                     }
                                 } catch (final JSONException e) {
                                     runOnUiThread(new Runnable() {
@@ -75,15 +79,12 @@ public class ConnexionActivity extends AppCompatActivity {
                 });
             }
         });
-
         Button btnRetour = (Button)findViewById(R.id.buttonRetour);
-
         btnRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 }

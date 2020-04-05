@@ -7,12 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.festival.utilitaires.Functions;
+import com.example.festival.utilitaires.Http;
+import com.example.festival.utilitaires.Manager;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -28,6 +33,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private int nbRepresentations;
+    private boolean connecte=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,44 +168,12 @@ public class MainActivity extends AppCompatActivity {
                                             String result="";//=sample.getText().toString();
 
                                             int index = table.indexOfChild(tablerow)-1;
-
-                                            String[] representation= new String[5];
-                                            String[] lieu= new String[4];
-                                            String[] groupe= new String[2];
+                                            int id=0;
                                             try{
                                                 JSONArray representations = jsonObj.getJSONArray("representations");
 
                                                 JSONObject r = representations.getJSONObject(index);
-                                                String id = r.getString("id");
-                                                String date = r.getString("date");
-                                                String heureDebut = r.getString("heureDebut");
-                                                String heureFin = r.getString("heureFin");
-                                                String nbPlacesDisponibles = r.getString("nbPlacesDisponibles");
-
-                                                representation[0]=id;
-                                                representation[1]=date;
-                                                representation[2]=heureDebut;
-                                                representation[3]=heureFin;
-                                                representation[4]=nbPlacesDisponibles;
-
-                                                JSONObject lieuJson = r.getJSONObject("lieu");
-                                                String idLieu = lieuJson.getString("id");
-                                                String nomLieu = lieuJson.getString("nom");
-                                                String adresseLieu = lieuJson.getString("adresseLieu");
-                                                String capAccueilLieu = lieuJson.getString("capAccueil");
-
-                                                lieu[0]=idLieu;
-                                                lieu[1]=nomLieu;
-                                                lieu[2]=adresseLieu;
-                                                lieu[3]=capAccueilLieu;
-
-                                                JSONObject groupeJson = r.getJSONObject("groupe");
-                                                String idGroupe = groupeJson.getString("id");
-                                                String nomGroupe = groupeJson.getString("nom");
-
-
-                                                groupe[0]=idGroupe;
-                                                groupe[1]=nomGroupe;
+                                                id = r.getInt("id");
                                             } catch (final JSONException e) {
                                                 runOnUiThread(new Runnable() {
                                                     @Override
@@ -209,9 +183,7 @@ public class MainActivity extends AppCompatActivity {
                                                 });
                                             }
                                             Intent intent = new Intent(MainActivity.this, RepresentationActivity.class);
-                                            intent.putExtra("representation", representation);
-                                            intent.putExtra("lieu", lieu);
-                                            intent.putExtra("groupe", groupe);
+                                            intent.putExtra("representation", id);
                                             startActivity(intent);
                                         }
                                     });
@@ -231,16 +203,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button buttonMainConnexion = (Button) findViewById(R.id.buttonMainConnexion);
-
+        Button buttonMainConnexion = (Button) findViewById(R.id.buttonMainConnexion);
         buttonMainConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new  Intent(MainActivity.this, ConnexionActivity.class);
                 startActivity(intent);
-                LinearLayout linearLayout = findViewById(R.id.layout_main);
-                linearLayout.removeView(buttonMainConnexion);
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(Manager.isConnecte() && !connecte){
+            connecte=true;
+            final Button buttonMainConnexion = (Button) findViewById(R.id.buttonMainConnexion);
+            final LinearLayout linearLayout = findViewById(R.id.layout_main);
+            linearLayout.removeView(buttonMainConnexion);
+
+            final LinearLayout linearLayoutConnecte = new LinearLayout(this);
+            linearLayoutConnecte.setOrientation(LinearLayout.HORIZONTAL);
+            linearLayoutConnecte.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            linearLayoutConnecte.addView(Functions.textViewClientConnecte(this));
+
+            Button buttonDeconnexion = new Button(this);
+            buttonDeconnexion.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            buttonDeconnexion.setText(R.string.buttonDeconnexion);
+            linearLayoutConnecte.addView(buttonDeconnexion);
+
+            buttonDeconnexion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Manager.deconnexion();
+                    linearLayout.removeView(linearLayoutConnecte);
+                    linearLayout.addView(buttonMainConnexion, 0);
+                    recreate();
+                }
+            });
+            linearLayout.addView(linearLayoutConnecte, 0);
+        }
     }
 }

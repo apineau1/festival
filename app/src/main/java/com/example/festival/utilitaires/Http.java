@@ -1,4 +1,4 @@
-package com.example.festival;
+package com.example.festival.utilitaires;
 
 import okhttp3.OkHttpClient;
 

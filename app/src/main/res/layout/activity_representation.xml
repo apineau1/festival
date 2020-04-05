@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/layout_representation">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:id="@+id/layout_representation_connecte">
         <TextView
             android:id="@+id/textViewTitre"
             android:layout_width="wrap_content"
@@ -142,45 +144,9 @@
             android:text="@string/textViewAffichageNbPlacesDisponibles" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/placesVoulues"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        tools:ignore="InvalidId">
-        <TextView
-            android:id="@+id/textViewNbPlacesVoulues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textViewNbPlacesVoulues" />
-
-        <EditText
-            android:id="@+id/editTextNbPlacesVoulues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-            android:inputType="number"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/buttonAuthentification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/buttonAuthentification" />
-
     <Button
         android:id="@+id/buttonBackHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/buttonBackHome" />
-
-    <TextView
-        android:id="@+id/textViewClient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:visibility="invisible"
-        android:text="client" />
 </LinearLayout>

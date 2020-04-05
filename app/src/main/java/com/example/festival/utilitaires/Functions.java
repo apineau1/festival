@@ -1,4 +1,13 @@
-package com.example.festival;
+package com.example.festival.utilitaires;
+
+import android.app.Activity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.example.festival.R;
+
+import org.w3c.dom.Text;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,5 +30,12 @@ public class Functions {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static TextView textViewClientConnecte(Activity activity){
+        TextView textView = new TextView(activity);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView.setText("Connecté(e) : "+Manager.getNom()+" "+Manager.getPrenom());
+        return textView;
     }
 }
