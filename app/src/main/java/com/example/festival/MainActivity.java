@@ -168,12 +168,12 @@ public class MainActivity extends AppCompatActivity {
                                             String result="";//=sample.getText().toString();
 
                                             int index = table.indexOfChild(tablerow)-1;
-                                            int id=0;
+                                            String id="0";
                                             try{
                                                 JSONArray representations = jsonObj.getJSONArray("representations");
 
                                                 JSONObject r = representations.getJSONObject(index);
-                                                id = r.getInt("id");
+                                                id = r.getString("id");
                                             } catch (final JSONException e) {
                                                 runOnUiThread(new Runnable() {
                                                     @Override

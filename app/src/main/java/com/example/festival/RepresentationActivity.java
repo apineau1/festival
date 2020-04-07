@@ -25,7 +25,9 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RepresentationActivity extends AppCompatActivity {
@@ -36,9 +38,10 @@ public class RepresentationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representation);
-        int representation = getIntent().getIntExtra("representation",0);
+        String representation = getIntent().getStringExtra("representation");
 
-        Request requestUneRepresentation = new Request.Builder().url("http://192.168.1.66/api/representation.php?id="+representation).build();
+        RequestBody formBody = new FormBody.Builder().add("id", representation).build();
+        Request requestUneRepresentation = new Request.Builder().url("http://192.168.1.66/api/representation.php").post(formBody).build();
         Http.getInstance().newCall(requestUneRepresentation).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
@@ -131,7 +134,8 @@ public class RepresentationActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(Integer.parseInt(editTextPlacesVoulues.getText().toString()) <= Integer.parseInt(nbPlacesDisponibles)) {
-                        Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/insertReservation.php?idRepresentation=" + idRepresentation + "&idClient=" + Manager.getId() + "&nbPlaces=" + editTextPlacesVoulues.getText()).build();
+                        RequestBody formBody = new FormBody.Builder().add("idRepresentation", idRepresentation).add("idClient", String.valueOf(Manager.getId())).add("nbPlaces", editTextPlacesVoulues.getText().toString()).build();
+                        Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/insertReservation.php").post(formBody).build();
                         Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {

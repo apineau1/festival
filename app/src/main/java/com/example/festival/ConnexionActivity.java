@@ -20,7 +20,9 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConnexionActivity extends AppCompatActivity {
@@ -39,7 +41,8 @@ public class ConnexionActivity extends AppCompatActivity {
                 String mdp = editTextMdp.getText().toString();
                 mdp = Functions.md5(mdp);
 
-                Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/connexion.php?login="+login+"&mdp="+mdp).build();
+                RequestBody formBody = new FormBody.Builder().add("login", login).add("mdp", mdp).build();
+                Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/connexion.php").post(formBody).build();
 
                 Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                     @Override
