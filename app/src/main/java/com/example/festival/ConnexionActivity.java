@@ -63,7 +63,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                         String nom = jsonObjnbRepresentations.getString("nom");
                                         String prenom = jsonObjnbRepresentations.getString("prenom");
                                         new Manager(id, nom, prenom);
-                                        Toast.makeText(getApplicationContext(),"Bienvenu "+prenom, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(),"Bienvenue "+prenom, Toast.LENGTH_LONG).show();
                                         finish();
                                     }else{
                                         Toast.makeText(getApplicationContext(),"Login incorrect", Toast.LENGTH_LONG).show();
