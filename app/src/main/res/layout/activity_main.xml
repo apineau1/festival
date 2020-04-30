@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/layout_main">>
+        android:id="@+id/layout_main">
 
         <Button
             android:id="@+id/buttonMainConnexion"
@@ -37,4 +37,5 @@
             </TableLayout>
         </ScrollView>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

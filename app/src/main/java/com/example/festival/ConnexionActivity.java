@@ -42,7 +42,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 mdp = Functions.md5(mdp);
 
                 RequestBody formBody = new FormBody.Builder().add("login", login).add("mdp", mdp).build();
-                Request myGetRequestnbRepresentations = new Request.Builder().url("http://192.168.1.66/api/connexion.php").post(formBody).build();
+                Request myGetRequestnbRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/connexion.php").post(formBody).build();
 
                 Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                     @Override

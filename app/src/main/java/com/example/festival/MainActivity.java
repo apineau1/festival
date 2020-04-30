@@ -32,7 +32,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private int nbRepresentations;
     private boolean connecte=false;
 
     @Override
@@ -40,34 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Request requestNbRepresentations = new Request.Builder().url("http://192.168.1.66/api/nbRepresentations.php").build();
-        Http.getInstance().newCall(requestNbRepresentations).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) { }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                final String body = response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObj = new JSONObject(body);
-                            nbRepresentations = jsonObj.getInt("nbRepresentations");
-                        } catch (final JSONException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        Request requestRepresentations = new Request.Builder().url("http://192.168.1.66/api/representations.php").build();
+        Request requestRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/representations.php").build();
         Http.getInstance().newCall(requestRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
@@ -78,22 +50,22 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         try {
                             final JSONObject jsonObj = new JSONObject(body);
 
-                            final String [] col1 = new String[nbRepresentations+1];
-                            col1[0]="Lieu";
-                            final String [] col2 = new String[nbRepresentations+1];
-                            col2[0]="Groupe";
-                            final String [] col3 = new String[nbRepresentations+1];
-                            col3[0]="Date";
-                            final String [] col4 = new String[nbRepresentations+1];
-                            col4[0]="Heure début";
-                            final String [] col5 = new String[nbRepresentations+1];
-                            col5[0]="Heure fin";
-
                             JSONArray representations = jsonObj.getJSONArray("representations");
+                            int longueur =  representations.length()+1;
+
+                            final String [] col1 = new String[longueur];
+                            col1[0]="Lieu";
+                            final String [] col2 = new String[longueur];
+                            col2[0]="Groupe";
+                            final String [] col3 = new String[longueur];
+                            col3[0]="Date";
+                            final String [] col4 = new String[longueur];
+                            col4[0]="Heure début";
+                            final String [] col5 = new String[longueur];
+                            col5[0]="Heure fin";
 
                             for (int i=0; i < representations.length(); i++) {
                                 JSONObject r = representations.getJSONObject(i);
