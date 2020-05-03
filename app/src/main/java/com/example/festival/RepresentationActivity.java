@@ -40,8 +40,7 @@ public class RepresentationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_representation);
         String representation = getIntent().getStringExtra("representation");
 
-        RequestBody formBody = new FormBody.Builder().add("id", representation).build();
-        Request requestUneRepresentation = new Request.Builder().url("http://anthonypineau.alwaysdata.net/representation.php").post(formBody).build();
+        Request requestUneRepresentation = new Request.Builder().url("http://anthonypineau.alwaysdata.net/representation/"+representation).build();
         Http.getInstance().newCall(requestUneRepresentation).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
@@ -135,7 +134,7 @@ public class RepresentationActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if(Integer.parseInt(editTextPlacesVoulues.getText().toString()) <= Integer.parseInt(nbPlacesDisponibles)) {
                         RequestBody formBody = new FormBody.Builder().add("idRepresentation", idRepresentation).add("idClient", String.valueOf(Manager.getId())).add("nbPlaces", editTextPlacesVoulues.getText().toString()).build();
-                        Request myGetRequestnbRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/insertReservation.php").post(formBody).build();
+                        Request myGetRequestnbRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/insertReservation").post(formBody).build();
                         Http.getInstance().newCall(myGetRequestnbRepresentations).enqueue(new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {

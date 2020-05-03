@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Request requestRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/representations.php").build();
+        Request requestRepresentations = new Request.Builder().url("http://anthonypineau.alwaysdata.net/representations").build();
         Http.getInstance().newCall(requestRepresentations).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
